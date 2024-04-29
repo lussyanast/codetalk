@@ -42,12 +42,12 @@
                       placeholder="Search" aria-label="Search" name="" value="">
                   </div>
                 </form>
-                <ul class="navbar-nav my-auto my-2 my-lg-0">
+                <ul class="navbar-nav ms-auto my-2 my-lg-0">
                   <li class="nav-item my-auto">
-                    <a class="nav-link text-nowrap" href="#">Log In</a>
+                    <a class="btn btn-primary-green border" href="#">Log In</a>
                   </li>
                   <li class="nav-item ps-1 pe-0">
-                    <a class="btn btn-primary-white" href="#">Sign Up</a>
+                    <a class="btn btn-primary-white border" href="#">Sign Up</a>
                   </li>
                 </ul>
               </div>
