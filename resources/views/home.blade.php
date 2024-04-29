@@ -30,7 +30,7 @@
                     <a class="nav-link" href="#">Discussions</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">About Us</a>
+                    <a class="nav-link text-nowrap" href="#">About Us</a>
                   </li>
               </ul>
                 <form class="d-flex w-100 me-4 my-2 my-lg-0" role="search" action="#" method="GET">
@@ -42,7 +42,7 @@
                       placeholder="Search" aria-label="Search" name="" value="">
                   </div>
                 </form>
-                <ul>
+                <ul class="navbar-nav ms-auto my-2 my-lg-0">
                   <li class="nav-item my-auto">
                     <a class="nav-link text-nowrap" href="#">Log In</a>
                   </li>
