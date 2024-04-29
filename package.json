@@ -12,6 +12,7 @@
         "vite": "^5.0.0"
     },
     "dependencies": {
-        "bootstrap": "^5.2.3"
+        "bootstrap": "^5.2.3",
+        "laravel-mix": "^6.0.49"
     }
 }
