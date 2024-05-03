@@ -2,6 +2,17 @@
     height: 32px;
 }
 
+.margin-hero {
+    margin-top: 80px; 
+    margin-bottom: 80px; 
+}
+
+.bg-green {
+    background-color: #A3AF9E;
+    padding: 40px;
+    border-radius: 50px;
+}
+
 .navbar-nav {
     .nav-link.active {
         color: $black;
@@ -34,10 +45,12 @@
     border-radius: 50px;
     padding: 10px 24px;
     min-width: 128px;
+    border: 2px solid $green;
 
     &:hover {
         background-color: $gray-100;
         color: $green;
+        border: 2px solid $green;
     }
 }
 
@@ -47,21 +60,20 @@
     border-radius: 50px;
     padding: 10px 24px;
     min-width: 128px;
+    border: 2px solid $green;
 
     &:hover {
         background-color: $green-100;
         color: $green;
+        border: 2px solid $green;
     }
 }
 
-.btn-primary {
-    background-color: $green;
-    color: $white;
-    border-radius: 50px;
-    padding: 10px 24px;
-    min-width: 128px;
+.center-text {
+    text-align: center;
+    margin: 0 auto;
+}
 
-    &:hover {
-        color: $white;
-    }
+.min-h-372px {
+    min-height: 372px;
 }
