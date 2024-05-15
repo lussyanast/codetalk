@@ -30,10 +30,10 @@
           </form>
           <ul class="navbar-nav ms-auto my-2 my-lg-0">
             <li class="nav-item my-auto">
-              <a class="btn btn-primary-green" href="#">Log In</a>
+              <a class="btn btn-primary-green" href="login">Log In</a>
             </li>
             <li class="nav-item ps-1 pe-0">
-              <a class="btn btn-primary-white" href="#">Sign Up</a>
+              <a class="btn btn-primary-white" href="signup">Sign Up</a>
             </li>
           </ul>
         </div>

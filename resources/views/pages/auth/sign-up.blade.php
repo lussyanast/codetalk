@@ -49,7 +49,7 @@
                         </form>
                     </div>
                     <div class="text-center mt-3">
-                        Already have an account? <a href="#" class="text-underline color-primary"><u>Log In</u></a>
+                        Already have an account? <a href="login" class="text-underline color-primary"><u>Log In</u></a>
                     </div>
                 </div>
             </div>

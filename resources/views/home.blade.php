@@ -7,8 +7,8 @@
         <img class="h-54px mb-4" src="{{ url('assets/images/logo-white.png') }}" alt="CodeTalk Logo">
           <p class="mb-4">A supportive community where developers <b>can ask questions, 
             share insights, tackle coding challenges together, and create a dynamic space for learning and problem-solving.</b></p>
-          <a href="#" class="btn btn-primary-white me-2 mb-2 mb-lg-0">Sign Up</a>
-          <a href="#" class="btn btn-primary-green mb-2 mb-lg-0">Join Discussions</a>
+          <a href="signup" class="btn btn-primary-white me-2 mb-2 mb-lg-0">Sign Up</a>
+          <a href="login" class="btn btn-primary-green mb-2 mb-lg-0">Join Discussions</a>
         </div>
       </div>
   </section>
@@ -135,8 +135,8 @@
     <h2>Ready to contribute?</h2>
     <p class="mb-4">Let's contribute to connect with each other </p>
     <div class="text-center">
-      <a href="#" class="btn btn-primary-white me-2 mb-2 mb-lg-0">Sign Up</a>
-      <a href="#" class="btn btn-primary-green mb-2 mb-lg-0">Join Discussions</a>
+      <a href="signup" class="btn btn-primary-white me-2 mb-2 mb-lg-0">Sign Up</a>
+      <a href="login" class="btn btn-primary-green mb-2 mb-lg-0">Join Discussions</a>
     </div>
   </section>
 @endsection
