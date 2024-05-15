@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark navbar-expand-lg bg-light">
+<nav class="navbar navbar-dark navbar-expand-lg bg-light border shadow">
     <div class="container flex justify-content-between">
         <a class="navbar-link" href="{{ route('home')}}">
           <img class="h-32px" src="{{ url('assets/images/logo-green.png') }}" alt="CodeTalk Logo">

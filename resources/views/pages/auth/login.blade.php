@@ -1,15 +1,15 @@
 @extends('layouts.auth')
 
 @section('body')
-<section class="bg-gray vh-100">
-    <div class="container h-100 pt-5">
+<section class="bg-gray vh-100 d-flex align-items-center">
+    <div class="container">
         <div class="row justify-content-center">
-            <div class="col-12 col-lg-3">
+            <div class="col-12 col-lg-4">
                 <a href="" class="nav-link mb-5 text-center">
                     <img class="h-32px" src="{{ url('assets/images/logo-green.png') }}" alt="CodeTalk Logo">
                 </a>
-                <div class="card mb-5">
-                    <form action="">
+                <div class="card p-4 shadow">
+                    <form action="#">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email *</label>
                             <input type="email" class="form-control" id="email" placeholder="name@example.com" autocomplete="off" autofocus>
@@ -30,9 +30,9 @@
                         </div>
                     </form>
                 </div>
-            </div>
-            <div class="text-center">
-                Don't have an account? <a href="#" class="text-underline color-primary"><u>Sign Up</u></a>
+                <div class="text-center mt-3">
+                    Don't have an account? <a href="#" class="text-underline color-primary"><u>Sign Up</u></a>
+                </div>
             </div>
         </div>
     </div>
