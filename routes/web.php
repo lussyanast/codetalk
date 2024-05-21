@@ -28,3 +28,7 @@ Route::get('signup', function () {
 Route::get('discussions', function () {
     return view('pages.discussions.index');
 });
+
+Route::get('discussions/lorem', function () {
+    return view('pages.discussions.show');
+});

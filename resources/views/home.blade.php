@@ -3,21 +3,24 @@
 @section('body')
   <section class="container hero bg-green margin-hero py-5 shadow">
     <div class="row align-items-center h-100">
-      <div class="col-12 col-lg-6 center-text">
+      <div class="col-12 col-lg-6 text-center text-lg-start">
         <img class="h-54px mb-4" src="{{ url('assets/images/logo-white.png') }}" alt="CodeTalk Logo">
-          <p class="mb-4">A supportive community where developers <b>can ask questions, 
-            share insights, tackle coding challenges together, and create a dynamic space for learning and problem-solving.</b></p>
-          <a href="signup" class="btn btn-primary-white me-2 mb-2 mb-lg-0">Sign Up</a>
-          <a href="login" class="btn btn-primary-green mb-2 mb-lg-0">Join Discussions</a>
-        </div>
+        <p class="mb-4">A supportive community where developers <b>can ask questions, 
+          share insights, tackle coding challenges together, and create a dynamic space for learning and problem-solving.</b></p>
+        <a href="signup" class="btn btn-primary-white me-2 mb-2 mb-lg-0">Sign Up</a>
+        <a href="login" class="btn btn-primary-green mb-2 mb-lg-0">Join Discussions</a>
       </div>
+      <div class="col-12 col-lg-6 text-center d-none d-lg-block">
+        <!-- You can add an image or some other content here for larger screens if needed -->
+      </div>
+    </div>
   </section>
 
   <section class="container min-h-372px d-flex justify-content-center align-items-center">
     <div class="row justify-content-center">
       <div class="col-12 col-lg-4 text-center mb-4">
         <div class="py-4 px-3 m-4"> 
-          <img class="promote-icon mb-2" src="{{ url('assets/images/discussions.png')}}" alt="Discussions"></a>
+          <img class="promote-icon mb-2" src="{{ url('assets/images/discussions.png')}}" alt="Discussions">
           <h2>Discussions</h2>
           <p class="fs-3">34,834</p>
         </div>

@@ -10,6 +10,7 @@
         </header>
 
         <main>
+            @include('partials.alert')
             @yield('body')
             @yield('before-script')
             @include('partials.script')

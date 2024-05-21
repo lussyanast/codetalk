@@ -12,7 +12,7 @@
                         90,733 Discussions
                     </div>
                 </div>
-                <a href="#" class="btn btn-primary-white">Log In to Create Discussions</a>
+                <a href="login" class="btn btn-primary-white">Log In to Create Discussions</a>
             </div>
             <div class="row">
                 <div class="col-12 col-lg-8 mb-5 mb-lg-0">
