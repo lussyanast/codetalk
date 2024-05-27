@@ -1,17 +1,14 @@
 @extends('layouts.app')
 
 @section('body')
-  <section class="container hero bg-green margin-hero py-5 shadow">
+  <section class="container hero bg-green py-5 shadow" style="margin-top: 4rem;">
     <div class="row align-items-center h-100">
-      <div class="col-12 col-lg-6 text-center text-lg-start">
+      <div class="col-12 col-lg-6 offset-lg-3 text-center">
         <img class="h-54px mb-4" src="{{ url('assets/images/logo-white.png') }}" alt="CodeTalk Logo">
         <p class="mb-4">A supportive community where developers <b>can ask questions, 
           share insights, tackle coding challenges together, and create a dynamic space for learning and problem-solving.</b></p>
-        <a href="signup" class="btn btn-primary-white me-2 mb-2 mb-lg-0">Sign Up</a>
-        <a href="login" class="btn btn-primary-green mb-2 mb-lg-0">Join Discussions</a>
-      </div>
-      <div class="col-12 col-lg-6 text-center d-none d-lg-block">
-        <!-- You can add an image or some other content here for larger screens if needed -->
+        <a href="{{ route('auth.sign-up.show') }}" class="btn btn-primary-white me-2 mb-2 mb-lg-0">Sign Up</a>
+        <a href="{{ route('discussions.index') }}" class="btn btn-primary-green mb-2 mb-lg-0">Join Discussions</a>
       </div>
     </div>
   </section>
@@ -138,8 +135,8 @@
     <h2>Ready to contribute?</h2>
     <p class="mb-4">Let's contribute to connect with each other </p>
     <div class="text-center">
-      <a href="signup" class="btn btn-primary-white me-2 mb-2 mb-lg-0">Sign Up</a>
-      <a href="login" class="btn btn-primary-green mb-2 mb-lg-0">Join Discussions</a>
+      <a href="{{ route('auth.sign-up.show') }}" class="btn btn-primary-white me-2 mb-2 mb-lg-0">Sign Up</a>
+      <a href="{{ route('discussions.index') }}" class="btn btn-primary-green mb-2 mb-lg-0">Join Discussions</a>
     </div>
   </section>
 @endsection

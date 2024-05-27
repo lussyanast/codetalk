@@ -31,7 +31,7 @@
                     </form>
                 </div>
                 <div class="text-center mt-3">
-                    Don't have an account? <a href="signup" class="text-underline color-primary"><u>Sign Up</u></a>
+                    Don't have an account? <a href="{{ route('auth.sign-up.show') }}" class="text-underline color-primary"><u>Sign Up</u></a>
                 </div>
             </div>
         </div>

@@ -103,7 +103,9 @@
                         </div>
                     </div>
                     <div class="fw-bold text-center">
-                        Please <a href="#" class="text-underline color-primary">sign in</a> or <a href="#" class="text-underline color-primary">create an account</a> to participate in this discussion.
+                        Please <a href="{{ route('auth.login.show') }}" class="text-underline color-primary">
+                        sign in</a> or <a href="{{ route('auth.sign-up.show') }}" class="text-underline color-primary">
+                        create an account</a> to participate in this discussion.
                     </div>
                 </div>
                 <div class="col-12 col-lg-4">
