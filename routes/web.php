@@ -44,3 +44,7 @@ Route::get('answers/1', function () {
 Route::get('users/lussyanast', function () {
     return view('pages.users.show');
 })->name('users.show');
+
+Route::get('users/lussyanast/edit', function () {
+    return view('pages.users.edit');
+})->name('users.edit');
