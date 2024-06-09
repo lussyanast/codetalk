@@ -19,10 +19,10 @@
                             <div class="mb-3">
                                 <label for="category_slug" class="form-label">Category</label>
                                 <select class="form-select" name="category_slug" id="category_slug">
-                                    <option value="">Select Category</option>
-                                    <option value="html">HTML</option>
-                                    <option value="php">PHP</option>
-                                    <option value="css">CSS</option>
+                                    <option value="">-- Choose One --</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->slug }}">{{ $category->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -44,6 +44,7 @@
 @section('after-script')
     <script>
         $(document).ready(function() {
+            // Initialize Summernote
             $('#content').summernote({
                 placeholder: 'Write your problems here...',
                 tabSize: 2,
@@ -60,6 +61,23 @@
             });
 
             $('span.note-icon.caret').remove();
+
+            // Initialize Select2
+            $('#category_slug').select2({
+                placeholder: "-- Choose One --",
+                allowClear: true
+            });
+
+            // Get and sort options
+            let options = $('#category_slug option').toArray().sort((a, b) => {
+                if (a.text.toLowerCase() < b.text.toLowerCase()) return -1;
+                if (a.text.toLowerCase() > b.text.toLowerCase()) return 1;
+                return 0;
+            });
+
+            // Append sorted options back
+            $('#category_slug').empty().append(options);
+            $('#category_slug').trigger('change'); // Update Select2
         });
     </script>
 @endsection

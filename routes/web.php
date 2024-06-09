@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::middleware('auth')->group(function() {
+    Route::namespace('App\Http\Controllers')->group(function() {
+        Route::resource('discussions', DiscussionController::class)
+            ->only(['create', 'store', 'edit', 'update', 'destroy']);
+    });
+});
+
 Route::get('/', function () {
     return view('home');
 })->name('home');
@@ -26,16 +33,12 @@ Route::namespace('App\Http\Controllers\Auth')->group(function() {
 });
 
 Route::get('discussions', function () {
-    return view('pages.discussions.index');
+   return view('pages.discussions.index');
 })->name('discussions.index');
 
 Route::get('discussions/show', function () {
-    return view('pages.discussions.show');
+   return view('pages.discussions.show');
 })->name('discussions.show');
-
-Route::get('discussions/create', function () {
-    return view('pages.discussions.form');
-})->name('discussions.create');
 
 Route::get('answers/1', function () {
     return view('pages.answers.form');
