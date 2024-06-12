@@ -11,27 +11,40 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8 mb-5 mb-lg-0">
                     <div class="card card-discussions p-4">
-                        <form action="" method="POST">
+                        <form action="{{ route('discussions.store') }}" method="POST">
+                            @csrf
                             <div class="mb-3">
                                 <label for="title" class="form-label">Title</label>
-                                <input type="text" class="form-control" id="title" name="title" autofocus>
+                                <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" 
+                                    value="{{ old('title') }}" name="title" autofocus>
+                                @error('title')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="category_slug" class="form-label">Category</label>
-                                <select class="form-select" name="category_slug" id="category_slug">
+                                <select class="form-select @error('category_slug') is-invalid @enderror" name="category_slug" id="category_slug">
                                     <option value="">-- Choose One --</option>
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->slug }}">{{ $category->name }}</option>
+                                        <option value="{{ $category->slug }}" {{ old('category_slug') === $category->slug ? 'selected' : '' }}>
+                                            {{ $category->name }}
+                                        </option>
                                     @endforeach
                                 </select>
+                                @error('category_slug')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="mb-3">
-                                <label for="content" class="form-label">Question</label>
-                                <textarea class="form-control" name="content" id="content" rows="10"></textarea>
+                                <label for="content" class="form-label @error('content') is-invalid @enderror">Question</label>
+                                <textarea class="form-control" name="content" id="content" rows="10">{{ old('content') }}</textarea>
+                                @error('content')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="d-flex justify-content-end">
                                 <button class="btn btn-primary me-3" type="submit">Publish</button>
-                                <a href="{{ route('home') }}" class="btn btn-secondary">Cancel</a>
+                                <a href="{{ route('discussions.index') }}" class="btn btn-secondary" onclick="return confirm('Are you sure you want to cancel?')">Cancel</a>
                             </div>
                         </form>
                     </div>
@@ -60,8 +73,6 @@
                 ]
             });
 
-            $('span.note-icon.caret').remove();
-
             // Initialize Select2
             $('#category_slug').select2({
                 placeholder: "-- Choose One --",
@@ -69,15 +80,9 @@
             });
 
             // Get and sort options
-            let options = $('#category_slug option').toArray().sort((a, b) => {
-                if (a.text.toLowerCase() < b.text.toLowerCase()) return -1;
-                if (a.text.toLowerCase() > b.text.toLowerCase()) return 1;
-                return 0;
-            });
-
+            let options = $('#category_slug option').toArray().sort((a, b) => a.text.localeCompare(b.text));
             // Append sorted options back
-            $('#category_slug').empty().append(options);
-            $('#category_slug').trigger('change'); // Update Select2
+            $('#category_slug').empty().append(options).trigger('change');
         });
     </script>
 @endsection

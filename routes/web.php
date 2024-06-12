@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\DiscussionController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\SignUpController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,31 +16,35 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth')->group(function() {
-    Route::namespace('App\Http\Controllers')->group(function() {
-        Route::resource('discussions', DiscussionController::class)
-            ->only(['create', 'store', 'edit', 'update', 'destroy']);
-    });
-});
-
 Route::get('/', function () {
     return view('home');
 })->name('home');
 
+// Authentication Routes
 Route::namespace('App\Http\Controllers\Auth')->group(function() {
-    Route::get('login', 'LoginController@show')->name('auth.login.show');
-    Route::post('login', 'LoginController@login')->name('auth.login.login');
-    Route::post('logout', 'LoginController@logout')->name('auth.login.logout');
-    Route::get('signup', 'SignUpController@show')->name('auth.sign-up.show');
-    Route::post('signup', 'SignUpController@signUp')->name('auth.sign-up.sign-up');
+    Route::get('login', [LoginController::class, 'show'])->name('auth.login.show');
+    Route::post('login', [LoginController::class, 'login'])->name('auth.login.login');
+    Route::post('logout', [LoginController::class, 'logout'])->name('auth.login.logout');
+    Route::get('signup', [SignUpController::class, 'show'])->name('auth.sign-up.show');
+    Route::post('signup', [SignUpController::class, 'signUp'])->name('auth.sign-up.sign-up');
 });
 
-Route::get('discussions', function () {
-   return view('pages.discussions.index');
-})->name('discussions.index');
+// Protected Discussion Routes
+Route::middleware('auth')->group(function() {
+    Route::resource('discussions', DiscussionController::class)
+        ->only(['create', 'store', 'edit', 'update', 'destroy']);
+});
 
+Route::namespace('App\Http\Controllers')->group(function() {
+    Route::resource('discussions', DiscussionController::class)->only(['index', 'show']);
+    Route::get('discussions/categories/{category}', 'CategoryController@show')
+        ->name('discussions.categories.show');
+});
+
+
+// Static Pages
 Route::get('discussions/show', function () {
-   return view('pages.discussions.show');
+    return view('pages.discussions.show');
 })->name('discussions.show');
 
 Route::get('answers/1', function () {
