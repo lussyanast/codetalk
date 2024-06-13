@@ -9,7 +9,7 @@
                         <div class="fs-2 fw-bold color-gray me-2 mb-0">Discussions</div>
                         <div class="fs-2 fw-bold color-gray me-2 mb-0">></div>
                     </div>
-                    <h2 class="mb-0">How to add a custom validation in Laravel?</h2>
+                    <h2 class="mb-0">{{ $discussion->title }}</h2>
                 </div>
             </div>
             <div class="row">
@@ -17,32 +17,43 @@
                     <div class="card card-discussions mb-4 p-3">
                         <div class="row">
                             <div class="col-1 d-flex flex-column justify-content-start align-items-center">
-                                <a href="#">
-                                    <img src="{{ url('assets/images/like.png') }}" alt="Like" class="like-icon mb-1">
+                                <a id="discussion-like" href="javascript:;" data-liked="{{ $discussion->liked() }}">
+                                    <img src="{{ $discussion->liked() ? $likedImage : $notLikedImage }}" 
+                                    alt="Like" id="discussion-like-icon" class="like-icon mb-1">
                                 </a>
-                                <span class="fs-4 color-gray mb-1">12</span>
+                                <span id="discussion-like-count" class="fs-4 color-gray mb-1">{{ $discussion->likeCount }}</span>
                             </div>
                             <div class="col-11">
-                                <p>Oh begitu........ Iya deh..</p>
+                                <p>{!! $discussion->content !!}</p>
                                 <div class="mb-3">
-                                    <a href="#"><span class="badge rounded-pill text-bg-light">Facade</span></a>
+                                    <a href="{{ route('discussions.categories.show', $discussion->category->slug) }}"><span class="badge rounded-pill text-bg-light">{{ $discussion->category->slug }}</span></a>
                                 </div>
                                 <div class="row align-items-start justify-content-between">
                                     <div class="col">
                                         <span class="color-gray me-2">
                                             <a href="javascript:;" id="share-discussion"><small>Share</small></a>
-                                            <input type="text" value="{{ url('discussions/lorem') }}" id="current-url" class="d-none">
+                                            <input type="text" value="{{ route('discussions.show', $discussion->slug) }}" id="current-url" class="d-none">
                                         </span>
+                                        @if ($discussion->user_id === auth()->id())
+                                            <span class="color-gray me-2">
+                                                <a href="{{ route('discussions.edit', $discussion->slug) }}">
+                                                    <small>Edit</small>
+                                                </a>
+                                            </span>
+                                        @endif
                                     </div>
                                     <div class="col-5 col-lg-3 d-flex">
                                         <a href="#" class="card-discussions-show-avatar-wrapper flex-shrink-0 rounded-circle overflow-hidden me-1">
-                                            <img src="{{ url('assets/images/avatar.png') }}" alt="Profile" class="avatar">
+                                            <img src="{{ filter_var($discussion->user->picture, FILTER_VALIDATE_URL) 
+                                                ? $discussion->user->picture : Storage::url($discussion->user->picture) }}"
+                                                alt="Profile" class="avatar">
                                         </a>
                                         <div class="fs-12px lh-1">
                                             <span>
-                                                <a href="#" class="fw-bold d-flex align-items-start text-break mb-1">lussyanast</a>
+                                                <a href="#" class="fw-bold d-flex align-items-start text-break mb-1">
+                                                    {{ $discussion->user->username }}</a>
                                             </span>
-                                            <span class="color-gray">5 hours ago</span>
+                                            <span class="color-gray">{{ $discussion->created_at->diffForHumans() }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -112,10 +123,11 @@
                     <div class="card p-3">
                         <h3>All Categories</h3>
                         <div>
-                            <a href="#"><span class="badge rounded-pill text-bg-light">Eloquent</span></a>
-                            <a href="#"><span class="badge rounded-pill text-bg-light">Javascript</span></a>
-                            <a href="#"><span class="badge rounded-pill text-bg-light">PHP</span></a>
-                            <a href="#"><span class="badge rounded-pill text-bg-light">HTML</span></a>
+                            @foreach ($categories as $category)
+                            <a href="{{ route('discussions.categories.show', $category->slug) }}">
+                                <span class="badge rounded-pill text-bg-light">{{ $category->name }}</span>
+                            </a>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -139,7 +151,34 @@
 
             var alertContainer = alert.find('.container');
             alertContainer.first().text('Link to this discussion copied successfully');
-        })
-    })
+        });
+
+        $('#discussion-like').click(function() {
+            var isLiked = $(this).data('liked');
+            var likeRoute = isLiked ? '{{ route("discussions.like.unlike", $discussion->slug) }}'
+                : '{{ route("discussions.like.like", $discussion->slug) }}';
+            
+            $.ajax({
+                method: 'POST',
+                url: likeRoute,
+                data: {
+                    '_token': '{{ csrf_token() }}'
+                }
+            })
+            .done(function(res) {
+                if (res.status === 'success') {
+                    $('#discussion-like-count').text(res.data.likeCount);
+
+                    if (isLiked) {
+                        $('#discussion-like-icon').attr('src', '{{ $notLikedImage }}');
+                    } else {
+                        $('#discussion-like-icon').attr('src', '{{ $likedImage }}');
+                    }
+
+                    $('#discussion-like').data('liked', !isLiked);
+                }
+            });
+        });
+    });
 </script>
 @endsection

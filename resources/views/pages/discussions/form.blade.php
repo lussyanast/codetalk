@@ -11,12 +11,16 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8 mb-5 mb-lg-0">
                     <div class="card card-discussions p-4">
-                        <form action="{{ route('discussions.store') }}" method="POST">
+                        <form action="{{ isset($discussion) ? route('discussions.update', $discussion->slug) 
+                            : route('discussions.store') }}" method="POST">
                             @csrf
+                            @isset($discussion)
+                            @method('PUT')
+                            @endisset
                             <div class="mb-3">
                                 <label for="title" class="form-label">Title</label>
                                 <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" 
-                                    value="{{ old('title') }}" name="title" autofocus>
+                                    value="{{ $discussion->title ?? old('title') }}" name="title" autofocus>
                                 @error('title')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -26,7 +30,9 @@
                                 <select class="form-select @error('category_slug') is-invalid @enderror" name="category_slug" id="category_slug">
                                     <option value="">-- Choose One --</option>
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->slug }}" {{ old('category_slug') === $category->slug ? 'selected' : '' }}>
+                                        <option value="{{ $category->slug }}"
+                                            @if (($discussion->category->slug ?? old('category_slug')) === $category->slug)
+                                            {{ 'selected' }}  @endif>
                                             {{ $category->name }}
                                         </option>
                                     @endforeach
@@ -37,7 +43,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="content" class="form-label @error('content') is-invalid @enderror">Question</label>
-                                <textarea class="form-control" name="content" id="content" rows="10">{{ old('content') }}</textarea>
+                                <textarea class="form-control" name="content" id="content" rows="10">{{ $discussion->content ?? old('content') }}</textarea>
                                 @error('content')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

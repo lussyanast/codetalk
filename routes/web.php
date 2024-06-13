@@ -3,6 +3,7 @@
 use App\Http\Controllers\DiscussionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\SignUpController;
+use App\Http\Controllers\LikeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,8 @@ Route::namespace('App\Http\Controllers\Auth')->group(function() {
 Route::middleware('auth')->group(function() {
     Route::resource('discussions', DiscussionController::class)
         ->only(['create', 'store', 'edit', 'update', 'destroy']);
+        Route::post('/discussions/{discussionSlug}/like', [LikeController::class, 'discussionLike'])->name('discussions.like.like');
+        Route::post('/discussions/{discussionSlug}/unlike', [LikeController::class, 'discussionUnlike'])->name('discussions.like.unlike');
 });
 
 Route::namespace('App\Http\Controllers')->group(function() {
@@ -40,12 +43,6 @@ Route::namespace('App\Http\Controllers')->group(function() {
     Route::get('discussions/categories/{category}', 'CategoryController@show')
         ->name('discussions.categories.show');
 });
-
-
-// Static Pages
-Route::get('discussions/show', function () {
-    return view('pages.discussions.show');
-})->name('discussions.show');
 
 Route::get('answers/1', function () {
     return view('pages.answers.form');
