@@ -11,15 +11,18 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8 mb-5 mb-lg-0">
                     <div class="card card-discussions p-4 shadow-sm">
-                        <form action="" method="POST">
+                        <form action="{{ route('answers.update', $answer->id) }}" method="POST">
                             @csrf
+                            @method('PUT')
                             <div class="mb-3">
                                 <label for="answer" class="form-label">Answer</label>
-                                <textarea class="form-control" name="answer" id="answer" rows="10" placeholder="Write your answer here..."></textarea>
+                                <textarea class="form-control" name="answer" id="answer" rows="10" placeholder="Write your answer here...">
+                                    {{ $answer->answer ?? old('answer') }}
+                                </textarea>
                             </div>
                             <div class="d-flex justify-content-end">
-                                <button class="btn btn-primary me-3" type="submit">Publish</button>
-                                <a href="{{ route('home') }}" class="btn btn-secondary">Cancel</a>
+                                <button class="btn btn-primary me-3" type="submit">Submit</button>
+                                <a href="{{ route('discussions.show', $answer->discussion->slug) }}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </form>
                     </div>

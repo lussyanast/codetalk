@@ -49,7 +49,7 @@
                                 @enderror
                             </div>
                             <div class="d-flex justify-content-end">
-                                <button class="btn btn-primary me-3" type="submit">Publish</button>
+                                <button class="btn btn-primary me-3" type="submit">Submit</button>
                                 <a href="{{ route('discussions.index') }}" class="btn btn-secondary" onclick="return confirm('Are you sure you want to cancel?')">Cancel</a>
                             </div>
                         </form>
@@ -78,6 +78,8 @@
                     ['view', ['codeview', 'help']],
                 ]
             });
+
+            $('span.note-icon-caret').remove();
 
             // Initialize Select2
             $('#category_slug').select2({

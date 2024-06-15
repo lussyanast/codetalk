@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Discussion;
+use App\Models\Answer;
 use App\Http\Requests\Discussion\StoreRequest;
 use App\Http\Requests\Discussion\UpdateRequest;
 use Str;
@@ -96,10 +97,23 @@ class DiscussionController extends Controller
     public function show(string $slug)
     {
         // dapatkan discussion berdasarkan slug, dan eager load user dan categorynya
+        // cek apakah data discussion dengan slug tsb tidak ada
+        // jika tidak ada maka return page not found
+        // get answer berdasarkan discussion id
+        // sort berdasarkan created at menurun
+        // paginate 5
         // get semua category
         // return response
 
         $discussion = Discussion::with(['user', 'category'])->where('slug', $slug)->first();
+
+        if (!$discussion) {
+            return abort(404);
+        }
+
+        $discussionAnswers = Answer::where('discussion_id', $discussion->id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
 
         $notLikedImage = url('assets/images/like.png');
         $likedImage = url('assets/images/liked.png');
@@ -109,6 +123,7 @@ class DiscussionController extends Controller
             'categories' => Category::all(),
             'likedImage' => $likedImage,
             'notLikedImage' => $notLikedImage,
+            'discussionAnswers' => $discussionAnswers,
         ]);
     }
 
@@ -203,8 +218,36 @@ class DiscussionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $slug)
     {
-        //
+        // get data discussion berdasarkan slug
+        // cek apakah data discussion dengan slug tsb tidak ada
+        // jika tidak ada maka return page not found
+        // jika ada maka lanjut ke kodingan bawah
+        // cek apakah discussion tsb milik user yang sedang login
+        // jika bukan maka return page not found
+        // delete record
+        // jika berhasil maka return notif success dan redirect ke list discussion
+        // jika tidak berhasil maka lanjut ke kodingan di bawahnya yakni return error 500
+        
+        $discussion = Discussion::with('category')->where('slug', $slug)->first();
+
+        if (!$discussion) {
+            return abort(404);
+        }
+
+        $isOwnedByUser = $discussion->user_id == auth()->id();
+
+        if (!$isOwnedByUser) {
+            return abort(404);
+        }
+    
+        $delete = $discussion->delete();
+
+        if ($delete) {
+            session()->flash('notif.success', 'Discussion deleted successfully!');
+            return redirect()->route('discussions.index');
+        }
+        return abort(500);
     }
 }

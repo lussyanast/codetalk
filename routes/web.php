@@ -4,6 +4,8 @@ use App\Http\Controllers\DiscussionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\SignUpController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\AnswerController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +38,12 @@ Route::middleware('auth')->group(function() {
         ->only(['create', 'store', 'edit', 'update', 'destroy']);
         Route::post('/discussions/{discussionSlug}/like', [LikeController::class, 'discussionLike'])->name('discussions.like.like');
         Route::post('/discussions/{discussionSlug}/unlike', [LikeController::class, 'discussionUnlike'])->name('discussions.like.unlike');
+
+        Route::post('discussions/{discussion}/answer', [AnswerController::class, 'store'])->name('discussions.answer.store');
+
+        Route::resource('answers', AnswerController::class)->only(['edit', 'update', 'destroy']);
+        Route::post('/answers/{answer}/like', [LikeController::class, 'answerLike'])->name('answers.like.like');
+        Route::post('/answers/{answer}/unlike', [LikeController::class, 'answerUnlike'])->name('answers.like.unlike');
 });
 
 Route::namespace('App\Http\Controllers')->group(function() {
@@ -43,10 +51,6 @@ Route::namespace('App\Http\Controllers')->group(function() {
     Route::get('discussions/categories/{category}', 'CategoryController@show')
         ->name('discussions.categories.show');
 });
-
-Route::get('answers/1', function () {
-    return view('pages.answers.form');
-})->name('answers.edit');
 
 Route::get('users/lussyanast', function () {
     return view('pages.users.show');
