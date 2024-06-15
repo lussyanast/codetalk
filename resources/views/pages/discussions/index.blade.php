@@ -94,7 +94,7 @@
                         </div>
                     </div>
                     @empty
-                        <div class="card card-discussions">Currently no discussion yet</div>
+                        <div class="card card-discussions">Currently no discussion yet.</div>
                     @endforelse
 
                     {{ $discussions->links() }}

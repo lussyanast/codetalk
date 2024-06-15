@@ -52,9 +52,9 @@ Route::namespace('App\Http\Controllers')->group(function() {
         ->name('discussions.categories.show');
 });
 
-Route::get('users/lussyanast', function () {
-    return view('pages.users.show');
-})->name('users.show');
+Route::namespace('App\Http\Controllers\My')->group(function() {
+    Route::resource('users', UserController::class)->only(['show']);
+});
 
 Route::get('users/lussyanast/edit', function () {
     return view('pages.users.edit');
