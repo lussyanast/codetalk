@@ -64,7 +64,7 @@ class UserController extends Controller
             : Storage::url($user->picture);
     
         // return view
-        return view('pages.users.edit', [
+        return view('pages.users.form', [
             'user' => $user,
             'picture' => $picture,
         ]);

@@ -25,6 +25,10 @@
         border-color: #00BD13; /* Warna border untuk halaman aktif */
         color: white; /* Warna teks untuk halaman aktif */
     }
+
+    .sort-icon {
+        cursor: pointer;
+    }
 </style>
 
 @section('body')
@@ -37,16 +41,29 @@
                         <span>{{ isset($withCategory) ? ' About ' . $withCategory->name : '' }}</span>
                     </h2>
                     <div>
-                        {{ $discussions->total() . ' '
-                            . Str::plural('Discussion', $discussions->total()) }}
+                        {{ $discussions->total() . ' ' . Str::plural('Discussion', $discussions->total()) }}
                     </div>
                 </div>
-                @auth
-                    <a href="{{ route('discussions.create') }}" class="btn btn-primary-white">Create Discussion</a>
-                @endauth
-                @guest
-                    <a href="{{ route('auth.login.show') }}" class="btn btn-primary-green">Log In to Create Discussion</a>
-                @endguest
+                <div class="d-flex justify-content-between">
+                    <div>
+                        @auth
+                            <a href="{{ route('discussions.create') }}" class="btn btn-primary-white">Create Discussion</a>
+                        @endauth
+                        @guest
+                            <a href="{{ route('auth.login.show') }}" class="btn btn-primary-green">Log In to Create Discussion</a>
+                        @endguest
+                    </div>
+                    <div>
+                        <form action="{{ route('discussions.index') }}" method="GET" class="d-flex align-items-center">
+                            <i class="fas fa-sort sort-icon me-2" onclick="document.getElementById('sort-dropdown').classList.toggle('d-none');"></i>
+                            <select name="sort" id="sort-dropdown" class="form-select d-none" onchange="this.form.submit()">
+                                <option value="latest" {{ request('sort') == 'latest' ? 'selected' : '' }}>Latest</option>
+                                <option value="most_liked" {{ request('sort') == 'most_liked' ? 'selected' : '' }}>Most Liked</option>
+                                <option value="most_answered" {{ request('sort') == 'most_answered' ? 'selected' : '' }}>Most Answered</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-12 col-lg-8 mb-5 mb-lg-0">
@@ -58,8 +75,7 @@
                                     {{ $discussion->likeCount . ' ' . Str::plural('like', $discussion->likeCount) }}
                                 </div>
                                 <div class="text-nowrap color-gray">
-                                    {{ $discussion->answers->count() . ' '
-                                        . Str::plural('answer', $discussion->answers->count()) }}
+                                    {{ $discussion->answers->count() . ' ' . Str::plural('answer', $discussion->answers->count()) }}
                                 </div>
                             </div>
                             <div class="col-12 col-lg-10">

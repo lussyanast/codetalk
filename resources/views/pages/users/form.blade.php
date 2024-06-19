@@ -18,6 +18,9 @@
                             </label>
                             <input type="file" class="d-none" id="picture" name="picture" accept="image/*">
                         </div>
+                        @error('picture')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
                 </div>
                 <div class="col-12 col-lg-7">
                         <div class="mb-3">
@@ -40,7 +43,7 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="confirm-password" class="form-label">Confirm Password</label>
+                            <label for="password_confirmation" class="form-label">Confirm Password</label>
                             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
                             <div class="fs-12px text-muted">
                                 Leave this empty if you don't want to change your password.

@@ -19,13 +19,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
-
 Route::get('faq', function() {
-    return view('faq');
-})->name('faq');
+    return view('pages.faq');
+})->name('pages.faq');
 
 // Authentication Routes
 Route::namespace('App\Http\Controllers\Auth')->group(function() {
@@ -39,7 +35,7 @@ Route::namespace('App\Http\Controllers\Auth')->group(function() {
 // Protected Discussion Routes
 Route::middleware('auth')->group(function() {
     Route::namespace('App\Http\Controllers\My')->group(function() {
-        Route::resource('users', UserController::class)->only(['edit', 'update']);
+        Route::resource('users', UserController::class)->only(['edit', 'update', 'show']);
     });
 
     Route::resource('discussions', DiscussionController::class)
@@ -55,6 +51,8 @@ Route::middleware('auth')->group(function() {
 });
 
 Route::namespace('App\Http\Controllers')->group(function() {
+    Route::get('/', 'HomeController@index')->name('pages.home');
+    
     Route::resource('discussions', DiscussionController::class)->only(['index', 'show']);
     Route::get('discussions/categories/{category}', 'CategoryController@show')
         ->name('discussions.categories.show');

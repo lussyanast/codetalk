@@ -15,7 +15,7 @@ class UpdateRequest extends FormRequest
     {
         // Implement your authorization logic if needed
         // For example, you can check if the user is authenticated:
-        return auth()->check();
+        return true;
     }
 
     /**
@@ -31,14 +31,15 @@ class UpdateRequest extends FormRequest
                 'alpha_dash',
                 'min:3', 
                 'max:50',
-                Rule::unique('users')->ignore($this->route('username'), 'username')
+                Rule::unique('users')->ignore(request()->username, 'username')
             ],
             'password' => [
                 'nullable', 
                 'confirmed',
                 Password::min(8)->mixedCase()->numbers()->symbols()
             ],
-            'picture' => ['nullable', 'image', 'max:1500']
+            'password_confirmation' => ['nullable'],
+            'picture' => ['nullable', 'image', 'max:1500'],
         ];
     }
 }

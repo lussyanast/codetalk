@@ -51,7 +51,7 @@
                     <a id="share-profile" class="btn btn-primary-white me-4" href="javascript:;">Share</a>
                     @auth
                         @if ($user->id === auth()->id())
-                            <a href="{{ route('users.edit', $user->username) }}">Edit Profile</a>
+                            <a href="{{ route('users.edit', $user->username) }}" class="btn btn-primary-green me-4">Edit Profile</a>
                         @endif
                     @endauth
                 </div>

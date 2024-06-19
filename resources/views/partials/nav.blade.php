@@ -1,6 +1,6 @@
     <nav class="navbar navbar-dark navbar-expand-lg bg-light border shadow">
         <div class="container flex justify-content-between">
-            <a class="navbar-link" href="{{ route('home') }}">
+            <a class="navbar-link" href="{{ route('pages.home') }}">
                 <img class="h-32px" src="{{ url('assets/images/logo-green.png') }}" alt="CodeTalk Logo">
             </a>
             <button class="navbar-toggler custom-toggler collapsed" type="button" data-bs-toggle="collapse" 
@@ -10,13 +10,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-0 mx-lg-3">
                     <li class="nav-item d-block d-lg-none d-xl-block">
-                        <a class="nav-link {{ Route::currentRouteName() === 'home' ? 'active' : '' }}" aria-current="page" href="{{ route('home') }}">Home</a>
+                        <a class="nav-link {{ Route::currentRouteName() === 'pages.home' ? 'active' : '' }}" aria-current="page" href="{{ route('pages.home') }}">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ Route::currentRouteName() === 'discussions.index' ? 'active' : '' }}" href="{{ route('discussions.index') }}">Discussions</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Route::currentRouteName() === 'faq' ? 'active' : '' }}" href="{{ route('faq') }}">About Us</a>
+                        <a class="nav-link {{ Route::currentRouteName() === 'pages.faq' ? 'active' : '' }}" href="{{ route('pages.faq') }}">About Us</a>
                     </li>
                 </ul>
                 <form class="d-flex w-100 me-4 my-2 my-lg-0" role="search" action="{{ route('discussions.index') }}" method="GET">
