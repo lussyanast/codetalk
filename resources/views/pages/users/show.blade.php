@@ -49,6 +49,11 @@
                     </div>
                     <input type="text" id="current-url" class="d-none" value="{{ request()->url() }}">
                     <a id="share-profile" class="btn btn-primary-white me-4" href="javascript:;">Share</a>
+                    @auth
+                        @if ($user->id === auth()->id())
+                            <a href="{{ route('users.edit', $user->username) }}">Edit Profile</a>
+                        @endif
+                    @endauth
                 </div>
                 <div class="col-12 col-lg-8">
                     <div class="mb-5">

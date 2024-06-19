@@ -23,6 +23,10 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+Route::get('faq', function() {
+    return view('faq');
+})->name('faq');
+
 // Authentication Routes
 Route::namespace('App\Http\Controllers\Auth')->group(function() {
     Route::get('login', [LoginController::class, 'show'])->name('auth.login.show');
@@ -34,6 +38,10 @@ Route::namespace('App\Http\Controllers\Auth')->group(function() {
 
 // Protected Discussion Routes
 Route::middleware('auth')->group(function() {
+    Route::namespace('App\Http\Controllers\My')->group(function() {
+        Route::resource('users', UserController::class)->only(['edit', 'update']);
+    });
+
     Route::resource('discussions', DiscussionController::class)
         ->only(['create', 'store', 'edit', 'update', 'destroy']);
         Route::post('/discussions/{discussionSlug}/like', [LikeController::class, 'discussionLike'])->name('discussions.like.like');
@@ -55,7 +63,3 @@ Route::namespace('App\Http\Controllers')->group(function() {
 Route::namespace('App\Http\Controllers\My')->group(function() {
     Route::resource('users', UserController::class)->only(['show']);
 });
-
-Route::get('users/lussyanast/edit', function () {
-    return view('pages.users.edit');
-})->name('users.edit');

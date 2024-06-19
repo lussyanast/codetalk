@@ -8,6 +8,7 @@ use App\Models\User; // Pastikan model User diimport
 use App\Models\Discussion; // Pastikan model Discussion diimport
 use App\Models\Answer; // Pastikan model Answer diimport
 use Illuminate\Support\Facades\Storage; // Untuk Storage facade
+use App\Http\Requests\User\UpdateRequest;
 
 class UserController extends Controller
 {
@@ -45,5 +46,66 @@ class UserController extends Controller
             'answers' => Answer::where('user_id', $user->id)
                 ->paginate($perPage, $columns, $answersPageName),
         ]);
+    }
+
+    public function edit($username) {
+        // get user berdasarkan username
+        $user = User::where('username', $username)->first();
+    
+        // jika user tidak ada atau user id tidak sama dengan id milik user yang sedang login
+        // maka return page not found
+        if (!$user || $user->id !== auth()->id()) {
+            return abort(404);
+        }
+    
+        // Validate if the picture is a valid URL, if not get the storage URL
+        $picture = filter_var($user->picture, FILTER_VALIDATE_URL)
+            ? $user->picture 
+            : Storage::url($user->picture);
+    
+        // return view
+        return view('pages.users.edit', [
+            'user' => $user,
+            'picture' => $picture,
+        ]);
+    }
+
+    public function update(UpdateRequest $request, $username) {
+        \Log::info('Update method called');
+        
+        $user = User::where('username', $username)->first();
+        if (!$user || $user->id !== auth()->id()) {
+            return abort(404);
+        }
+    
+        $validated = $request->validated();
+    
+        if (isset($validated['password'])) {
+            $validated['password'] = bcrypt($validated['password']);
+        } else {
+            unset($validated['password']);
+        }
+    
+        if ($request->hasFile('picture')) {
+            \Log::info('Picture uploaded');
+            
+            if (filter_var($user->picture, FILTER_VALIDATE_URL) === false) {
+                Storage::disk('public')->delete($user->picture);
+            }
+    
+            $filePath = Storage::disk('public')->put('images/users/picture', request()->file('picture'));
+            $validated['picture'] = $filePath;
+        }
+    
+        $update = $user->update($validated);
+    
+        if ($update) {
+            \Log::info('User updated successfully');
+            session()->flash('notif.success', 'Your profile updated successfully!');
+            return redirect()->route('users.show', $validated['username']);
+        }
+    
+        \Log::error('Failed to update user');
+        return abort(500);
     }
 }
