@@ -27,6 +27,6 @@ class LoginController extends Controller
     public function logout() {
         auth()->logout();
 
-        return redirect()->route('home');
+        return redirect()->route('pages.home');
     }
 }

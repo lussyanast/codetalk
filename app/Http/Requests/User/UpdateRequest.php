@@ -39,7 +39,7 @@ class UpdateRequest extends FormRequest
                 Password::min(8)->mixedCase()->numbers()->symbols()
             ],
             'password_confirmation' => ['nullable'],
-            'picture' => ['nullable', 'image', 'max:1500'],
+            'picture' => ['nullable', 'image', 'max:30000'],
         ];
     }
 }

@@ -21,7 +21,7 @@
             <ul class="list-unstyled">
               <li class="text-white mb-2"><a href="{{ route('pages.home') }}">Home</a></li>
               <li class="text-white mb-2"><a href="{{ route('discussions.index') }}">Discussions</a></li>
-              <li class="text-white mb-2"><a href="{{ route('pages.faq') }}">About Us</a></li>
+              <li class="text-white mb-2"><a href="{{ route('pages.faq') }}">FAQ</a></li>
             </ul>
           </div>
         </div>
