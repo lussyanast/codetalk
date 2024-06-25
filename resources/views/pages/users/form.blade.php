@@ -54,7 +54,7 @@
                         </div>
                         <div>
                             <button class="btn btn-primary-white me-4" type="submit">Save</button>
-                            <a href="{{ route('users.show', $user->username) }}">Cancel</a>
+                            <a href="{{ route('users.show', $user->username) }}" class="btn btn-primary-green">Cancel</a>
                         </div>
                     </form>
                 </div>

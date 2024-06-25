@@ -49,8 +49,8 @@
                                 @enderror
                             </div>
                             <div class="d-flex justify-content-end">
-                                <button class="btn btn-primary me-3" type="submit">Submit</button>
-                                <a href="{{ route('discussions.index') }}" class="btn btn-secondary" onclick="return confirm('Are you sure you want to cancel?')">Cancel</a>
+                                <button class="btn btn-primary-white me-3" type="submit">Submit</button>
+                                <a href="{{ route('discussions.index') }}" class="btn btn-primary-green" onclick="return confirm('Are you sure you want to cancel?')">Cancel</a>
                             </div>
                         </form>
                     </div>

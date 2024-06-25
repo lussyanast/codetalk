@@ -21,8 +21,8 @@
                                 </textarea>
                             </div>
                             <div class="d-flex justify-content-end">
-                                <button class="btn btn-primary me-3" type="submit">Submit</button>
-                                <a href="{{ route('discussions.show', $answer->discussion->slug) }}" class="btn btn-secondary">Cancel</a>
+                                <button class="btn btn-primary-white me-3" type="submit">Submit</button>
+                                <a href="{{ route('discussions.show', $answer->discussion->slug) }}" class="btn btn-primary-green">Cancel</a>
                             </div>
                         </form>
                     </div>
