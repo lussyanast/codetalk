@@ -13,3 +13,23 @@
     width: 90px;
     height: 90px;
 }
+
+.bg-gradient-to-r {
+    background: #A3AF9E;
+    padding: 40px;
+    border-radius: 50px;
+  }
+  .logo-hover:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease-in-out;
+  }
+  .card-shadow {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+  }
+  .card-shadow:hover {
+    transform: translateY(-10px);
+  }
+  .animate__animated.animate__fadeInUp {
+    animation: fadeInUp 1s;
+  }

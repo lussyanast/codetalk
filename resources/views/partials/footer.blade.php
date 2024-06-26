@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-12 col-lg-6 mb-5 mb-lg-0">
         <img src="{{ url('assets/images/logo-green.png') }}" alt="CodeTalk Logo" class="h-32px mb-4">
-        <p class="text-white">A supportive community where developers can ask questions, 
-          share insights, tackle coding challenges together, and create a dynamic space for learning and problem-solving.</p>
+        <p class="text-white">A supportive community where developers <b> can ask questions, 
+          share insights, tackle coding challenges together, and create a dynamic space for learning and problem-solving.</b></p>
       </div>
       <div class="col-12 col-lg-6 me-auto">
         <div class="d-flex flex-column flex-lg-row justify-content-end">

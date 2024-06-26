@@ -27,7 +27,7 @@
                         <input class="form-control border-start-0 ps-0" type="search"
                             placeholder="Search" aria-label="Search" name="search" value="{{ $search ?? '' }}">
                     </div>
-                </form>                
+                </form>
 
                 <ul class="navbar-nav ms-auto my-2 my-lg-0">
                     @auth
