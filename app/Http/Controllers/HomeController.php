@@ -15,7 +15,7 @@ class HomeController extends Controller
             'discussionCount' => Discussion::count(),
             'userCount' => User::count(),
             'latestDiscussion' => Discussion::with('category', 'user')
-            ->orderBy('created_at', 'desc')->limit(3)->get(),
+            ->orderBy('created_at', 'desc')->limit(9)->get(),
         ]);
     }
 }
