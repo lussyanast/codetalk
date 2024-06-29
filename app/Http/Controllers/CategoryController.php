@@ -8,15 +8,7 @@ use App\Models\Discussion;
 
 class CategoryController extends Controller
 {
-    public function show($categorySlug) {
-        // get category berdasarkan categorySlug
-        // cek apakah data category di atas ada
-        // jika category tidak ada maka return abort 404
-        // buat query discussion, eager load user dan category, get category berdasarkan id category di atas
-        // discussionnya di sort by created at menurun
-        // dipaginasi 10
-        // lalu return view nya dengan semua variable di atas
-
+        public function show($categorySlug, Request $request) {
         $category = Category::where('slug', $categorySlug)->first();
 
         if (!$category) {
@@ -29,10 +21,21 @@ class CategoryController extends Controller
             ->paginate(10)
             ->withQueryString();
 
+        // Ambil 10 kategori teratas berdasarkan jumlah diskusi
+        $topCategories = Category::select('categories.id', 'categories.name', 'categories.slug')
+            ->join('discussions', 'categories.id', '=', 'discussions.category_id')
+            ->groupBy('categories.id', 'categories.name', 'categories.slug')
+            ->orderByRaw('COUNT(discussions.id) DESC')
+            ->limit(10)
+            ->get();
+
         return response()->view('pages.discussions.index', [
             'discussions' => $discussions,
             'categories' => Category::all(),
+            'topCategories' => $topCategories,
             'withCategory' => $category,
+            'search' => $request->search,
+            'sort' => $request->sort,
         ]);
     }
 }

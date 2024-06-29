@@ -16,15 +16,15 @@ class DiscussionController extends Controller
     /**
      * Display a listing of the resource.
      */
-        public function index(Request $request) {
+    public function index(Request $request) {
         $discussions = Discussion::with(['user', 'category']);
-
+    
         // Filter berdasarkan pencarian
         if ($request->search) {
             $discussions->where('title', 'like', "%$request->search%")
                 ->orWhere('content', 'like', "%$request->search%");
         }
-
+    
         // Sorting berdasarkan pilihan pengguna
         if ($request->sort) {
             switch ($request->sort) {
@@ -42,7 +42,7 @@ class DiscussionController extends Controller
         } else {
             $discussions->orderBy('created_at', 'desc');
         }
-
+    
         // Ambil 10 kategori teratas berdasarkan jumlah diskusi
         $topCategories = Category::select('categories.id', 'categories.name', 'categories.slug')
             ->join('discussions', 'categories.id', '=', 'discussions.category_id')
@@ -50,7 +50,7 @@ class DiscussionController extends Controller
             ->orderByRaw('COUNT(discussions.id) DESC')
             ->limit(10)
             ->get();
-
+    
         return response()->view('pages.discussions.index', [
             'discussions' => $discussions->paginate(10)->withQueryString(),
             'categories' => Category::all(),
