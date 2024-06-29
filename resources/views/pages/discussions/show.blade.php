@@ -171,14 +171,27 @@
                 @endguest
             </div>
             <div class="col-12 col-lg-4">
-                <div class="card p-3">
+                <div class="card p-3 mb-4">
                     <h3>All Categories</h3>
                     <div>
                         @foreach ($categories as $category)
                         <a href="{{ route('discussions.categories.show', $category->slug) }}">
-                            <span class="badge rounded-pill text-bg-light">{{ $category->name }}</span>
-                        </a>
+                                <span class="badge rounded-pill text-bg-light">{{ $category->name }}</span>
+                            </a>
                         @endforeach
+                    </div>
+                </div>
+
+                <div class="card p-3 mb-4">
+                    <h3>Top Pick Categories</h3>
+                    <div>
+                        @isset($topCategories)
+                            @foreach ($topCategories as $category)
+                                <a href="{{ route('discussions.categories.show', $category->slug) }}?search={{ $search ?? '' }}&sort={{ $sort ?? 'latest' }}">
+                                    <span class="badge rounded-pill text-bg-light">{{ $category->name }}</span>
+                                </a>
+                            @endforeach
+                        @endisset
                     </div>
                 </div>
             </div>

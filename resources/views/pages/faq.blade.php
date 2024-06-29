@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('body')
-  <section class="container hero bg-green py-5 shadow" style="margin-top: 4rem;">
+  <section class="container hero bg-gradient-to-r from-green-400 to-blue-500 py-5 shadow" style="margin-top: 4rem;">
     <div class="row align-items-center h-100">
       <div class="col-12 text-center">
         <h1 class="text-white">FREQUENTLY ASKED QUESTIONS</h1>
