@@ -186,10 +186,24 @@
                     <h3>Top Pick Categories</h3>
                     <div>
                         @isset($topCategories)
-                            @foreach ($topCategories as $category)
-                                <a href="{{ route('discussions.categories.show', $category->slug) }}?search={{ $search ?? '' }}&sort={{ $sort ?? 'latest' }}">
-                                    <span class="badge rounded-pill text-bg-light">{{ $category->name }}</span>
-                                </a>
+                            @php
+                                // Urutkan $topCategories berdasarkan jumlah diskusi
+                                $sortedCategories = $topCategories->sortByDesc(function($category) {
+                                    return optional($category->discussions)->count() ?? 0;
+                                })->take(10);
+
+                                $rank = 1;
+                            @endphp
+
+                            @foreach ($sortedCategories as $category)
+                                <div class="mb-2">
+                                    <a href="{{ route('discussions.categories.show', $category->slug) }}?search={{ $search ?? '' }}&sort={{ $sort ?? 'latest' }}">
+                                        <span class="badge rounded-pill text-bg-light">{{ $rank }}. {{ $category->name }}</span>
+                                    </a>
+                                </div>
+                                @php
+                                    $rank++;
+                                @endphp
                             @endforeach
                         @endisset
                     </div>

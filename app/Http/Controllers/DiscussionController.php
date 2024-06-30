@@ -138,12 +138,21 @@ class DiscussionController extends Controller
         $notLikedImage = url('assets/images/like.png');
         $likedImage = url('assets/images/liked.png');
 
+         // Ambil 10 kategori teratas berdasarkan jumlah diskusi
+        $topCategories = Category::select('categories.id', 'categories.name', 'categories.slug')
+            ->join('discussions', 'categories.id', '=', 'discussions.category_id')
+            ->groupBy('categories.id', 'categories.name', 'categories.slug')
+            ->orderByRaw('COUNT(discussions.id) DESC')
+            ->limit(10)
+            ->get();
+
         return response()->view('pages.discussions.show', [
             'discussion' => $discussion,
             'categories' => Category::all(),
             'likedImage' => $likedImage,
             'notLikedImage' => $notLikedImage,
             'discussionAnswers' => $discussionAnswers,
+            'topCategories' => $topCategories,
         ]);
     }
 
