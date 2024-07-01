@@ -164,3 +164,13 @@ pre {
     height: 36px;
     width: 36px;
 }
+
+.card-green {
+    background-color: $green;
+
+    &:hover {
+        background-color: $gray-100;
+        color: $green;
+        border: 2px solid $green;
+    }
+}

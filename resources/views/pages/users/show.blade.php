@@ -54,13 +54,21 @@
                             <a href="{{ route('users.edit', $user->username) }}" class="btn btn-primary-green me-4">Edit Profile</a>
                         @endif
                     @endauth
+                    <div class="card mt-4">
+                        <h5>Activity Statistics</h5>
+                        <ul>
+                            <li>Total Discussions: {{ $totalDiscussions }}</li>
+                            <li>Total Answers: {{ $totalAnswers }}</li>
+                            <li>Total Likes: {{ $totalLikes }}</li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="col-12 col-lg-8">
                     <div class="mb-5">
                         <h2 class="mb-3">My Discussions</h2>
                         <div>
                             @forelse ($discussions as $discussion)
-                                <div class="card card-discussions mb-4">
+                                <div class="card card-discussions mb-4 card-shadow">
                                     <div class="row p-3">
                                         <div class="col-12 col-lg-2 mb-1 mb-lg-0 d-flex flex-row flex-lg-column align-items-end">
                                             <div class="text-nowrap me-2 me-lg-0">
@@ -113,7 +121,7 @@
                         <h2 class="mb-3">My Answers</h2>
                         <div>
                             @forelse ($answers as $answer)
-                                <div class="card card-discussions">
+                                <div class="card card-discussions card-shadow">
                                     <div class="row align-items-center">
                                         <div class="col-2 col-lg-1 text-center">
                                             {{ $answer->likeCount }}

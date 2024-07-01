@@ -78,12 +78,12 @@
                                     @endif
                                 </div>
                                 <div class="col-5 col-lg-3 d-flex">
-                                    <a href="#" class="card-discussions-show-avatar-wrapper flex-shrink-0 rounded-circle overflow-hidden me-1">
+                                    <a href="{{ route('users.show', $discussion->user->username) }}" class="card-discussions-show-avatar-wrapper flex-shrink-0 rounded-circle overflow-hidden me-1">
                                         <img src="{{ filter_var($discussion->user->picture, FILTER_VALIDATE_URL) ? $discussion->user->picture : Storage::url($discussion->user->picture) }}" alt="Profile" class="avatar">
                                     </a>
                                     <div class="fs-12px lh-1">
                                         <span>
-                                            <a href="#" class="fw-bold d-flex align-items-start text-break mb-1">{{ $discussion->user->username }}</a>
+                                            <a href="{{ route('users.show', $discussion->user->username) }}" class="fw-bold d-flex align-items-start text-break mb-1">{{ $discussion->user->username }}</a>
                                         </span>
                                         <span class="color-gray">{{ $discussion->created_at->diffForHumans() }}</span>
                                     </div>
@@ -129,12 +129,12 @@
                                             @endif
                                         </div>
                                         <div class="col-5 col-lg-3 d-flex">
-                                            <a href="#" class="card-discussions-show-avatar-wrapper flex-shrink-0 rounded-circle overflow-hidden me-1">
+                                            <a href="{{ route('users.show', $answer->user->username) }}" class="card-discussions-show-avatar-wrapper flex-shrink-0 rounded-circle overflow-hidden me-1">
                                                 <img src="{{ filter_var($answer->user->picture, FILTER_VALIDATE_URL) ? $answer->user->picture : Storage::url($answer->user->picture) }}" alt="{{ $answer->user->username }}" class="avatar">
                                             </a>
                                             <div class="fs-12px lh-1">
                                                 <span class="{{ $answer->user->username === $discussion->user->username ? 'text-primary' : '' }}">
-                                                    <a href="#" class="fw-bold d-flex align-items-start text-break mb-1">{{ $answer->user->username }}</a>
+                                                    <a href="{{ route('users.show', $answer->user->username) }}" class="fw-bold d-flex align-items-start text-break mb-1">{{ $answer->user->username }}</a>
                                                 </span>
                                                 <span class="color-gray">5 hours ago</span>
                                             </div>
@@ -171,18 +171,18 @@
                 @endguest
             </div>
             <div class="col-12 col-lg-4">
-                <div class="card p-3 mb-4">
+                <div class="card p-3 mb-4 card-shadow">
                     <h3>All Categories</h3>
                     <div>
                         @foreach ($categories as $category)
                         <a href="{{ route('discussions.categories.show', $category->slug) }}">
-                                <span class="badge rounded-pill text-bg-light">{{ $category->name }}</span>
+                                <span class="badge rounded-pill card-green">{{ $category->name }}</span>
                             </a>
                         @endforeach
                     </div>
                 </div>
 
-                <div class="card p-3 mb-4">
+                <div class="card p-3 mb-4 card-shadow">
                     <h3>Top Pick Categories</h3>
                     <div>
                         @isset($topCategories)
@@ -198,7 +198,7 @@
                             @foreach ($sortedCategories as $category)
                                 <div class="mb-2">
                                     <a href="{{ route('discussions.categories.show', $category->slug) }}?search={{ $search ?? '' }}&sort={{ $sort ?? 'latest' }}">
-                                        <span class="badge rounded-pill text-bg-light">{{ $rank }}. {{ $category->name }}</span>
+                                        <span class="badge rounded-pill card-green">{{ $rank }}. {{ $category->name }}</span>
                                     </a>
                                 </div>
                                 @php

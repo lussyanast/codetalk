@@ -23,8 +23,7 @@ class UserController extends Controller
     // get answers berdasarkan id user dan get dengan paginasi per 5 row
     // return view
 
-    public function show($username)
-    {
+    public function show($username){
         $user = User::where('username', $username)->first();
         if (!$user) {
             return abort(404);
@@ -38,6 +37,11 @@ class UserController extends Controller
         $discussionsPageName = 'discussions';
         $answersPageName = 'answers';
 
+        // Statistik aktivitas pengguna
+        $totalDiscussions = Discussion::where('user_id', $user->id)->count();
+        $totalAnswers = Answer::where('user_id', $user->id)->count();
+        $totalLikes = $user->discussions->sum('likeCount') + $user->answers->sum('likeCount');
+
         return view('pages.users.show', [
             'user' => $user,
             'picture' => $picture,
@@ -45,6 +49,9 @@ class UserController extends Controller
                 ->paginate($perPage, $columns, $discussionsPageName),
             'answers' => Answer::where('user_id', $user->id)
                 ->paginate($perPage, $columns, $answersPageName),
+            'totalDiscussions' => $totalDiscussions,
+            'totalAnswers' => $totalAnswers,
+            'totalLikes' => $totalLikes,
         ]);
     }
 

@@ -68,7 +68,7 @@
             <div class="row">
                 <div class="col-12 col-lg-8 mb-5 mb-lg-0">
                     @forelse ($discussions as $discussion)
-                    <div class="card card-discussions mb-4">
+                    <div class="card card-discussions mb-4 card-shadow">
                         <div class="row p-3">
                             <div class="col-12 col-lg-2 mb-1 mb-lg-0 d-flex flex-row flex-lg-column align-items-end">
                                 <div class="text-nowrap me-2 me-lg-0">
@@ -116,18 +116,18 @@
                     {{ $discussions->links() }}
                 </div>
                 <div class="col-12 col-lg-4">
-                    <div class="card p-3 mb-4">
+                    <div class="card p-3 mb-4 card-shadow">
                         <h3>All Categories</h3>
                         <div>
                             @foreach ($categories as $category)
                             <a href="{{ route('discussions.categories.show', $category->slug) }}">
-                                    <span class="badge rounded-pill text-bg-light">{{ $category->name }}</span>
+                                    <span class="badge rounded-pill card-green">{{ $category->name }}</span>
                                 </a>
                             @endforeach
                         </div>
                     </div>
-
-                    <div class="card p-3 mb-4">
+    
+                    <div class="card p-3 mb-4 card-shadow">
                         <h3>Top Pick Categories</h3>
                         <div>
                             @isset($topCategories)
@@ -136,14 +136,14 @@
                                     $sortedCategories = $topCategories->sortByDesc(function($category) {
                                         return optional($category->discussions)->count() ?? 0;
                                     })->take(10);
-
+    
                                     $rank = 1;
                                 @endphp
-
+    
                                 @foreach ($sortedCategories as $category)
                                     <div class="mb-2">
                                         <a href="{{ route('discussions.categories.show', $category->slug) }}?search={{ $search ?? '' }}&sort={{ $sort ?? 'latest' }}">
-                                            <span class="badge rounded-pill text-bg-light">{{ $rank }}. {{ $category->name }}</span>
+                                            <span class="badge rounded-pill card-green">{{ $rank }}. {{ $category->name }}</span>
                                         </a>
                                     </div>
                                     @php
