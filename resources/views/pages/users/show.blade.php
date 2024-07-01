@@ -44,14 +44,30 @@
                                 <div class="color-gray">
                                     Member since {{ $user->created_at->diffForHumans() }}
                                 </div>
+                                <div class="mt-2">
+                                    <span class="fw-bold">{{ $followersCount }}</span> Followers
+                                    <span class="ms-3 fw-bold">{{ $followingCount }}</span> Following
+                                </div>
                             </div>
                         </div>
                     </div>
                     <input type="text" id="current-url" class="d-none" value="{{ request()->url() }}">
-                    <a id="share-profile" class="btn btn-primary-white me-4" href="javascript:;">Share</a>
+                    <a id="share-profile" class="btn btn-primary-green me-4" href="javascript:;">Share</a>
                     @auth
                         @if ($user->id === auth()->id())
-                            <a href="{{ route('users.edit', $user->username) }}" class="btn btn-primary-green me-4">Edit Profile</a>
+                            <a href="{{ route('users.edit', $user->username) }}" class="btn btn-primary-white me-4">Edit Profile</a>
+                        @else
+                            @if (auth()->user()->isFollowing($user->id))
+                                <form action="{{ route('users.unfollow', $user->username) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary-green">Unfollow</button>
+                                </form>
+                            @else
+                                <form action="{{ route('users.follow', $user->username) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary-white">Follow</button>
+                                </form>
+                            @endif
                         @endif
                     @endauth
                     <div class="card mt-4">
@@ -111,7 +127,7 @@
                                     </div>
                                 </div>
                             @empty
-                            <div class="card card-discussions">Currently no discussion yet.</div>
+                                <div class="card card-discussions">Currently no discussion yet.</div>
                             @endforelse
 
                             {{ $discussions->appends(['answers' => $answers->currentPage()])->links() }}
@@ -164,7 +180,7 @@
 
             var alertContainer = alert.find('.container');
             alertContainer.first().text('Link to this profile copied successfully');
-        })
-    })
+        });
+    });
 </script>
 @endsection

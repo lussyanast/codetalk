@@ -93,9 +93,17 @@
 <section class="container min-h-372px d-flex flex-column align-items-center justify-content-center">
   <h2>Ready to contribute?</h2>
   <p class="mb-4">Let's contribute to connect with each other </p>
+  @auth
+  <div class="text-center">
+    <a href="{{ route('pages.home') }}" class="btn btn-primary-white me-2 mb-2 mb-lg-0">Sign Up</a>
+    <a href="{{ route('discussions.index') }}" class="btn btn-primary-green mb-2 mb-lg-0">Join Discussions</a>
+  </div>
+  @endauth
+  @guest
   <div class="text-center">
     <a href="{{ route('auth.sign-up.show') }}" class="btn btn-primary-white me-2 mb-2 mb-lg-0">Sign Up</a>
     <a href="{{ route('discussions.index') }}" class="btn btn-primary-green mb-2 mb-lg-0">Join Discussions</a>
   </div>
+  @endguest
 </section>
 @endsection

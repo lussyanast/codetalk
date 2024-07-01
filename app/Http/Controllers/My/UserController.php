@@ -4,26 +4,16 @@ namespace App\Http\Controllers\My;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User; // Pastikan model User diimport
-use App\Models\Discussion; // Pastikan model Discussion diimport
-use App\Models\Answer; // Pastikan model Answer diimport
-use Illuminate\Support\Facades\Storage; // Untuk Storage facade
+use App\Models\User;
+use App\Models\Discussion;
+use App\Models\Answer;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\User\UpdateRequest;
 
 class UserController extends Controller
 {
-    // get user berdasarkan username
-    // cek apakah user dengan username tsb ada
-    // jika tidak ada maka return page not found
-    // buat var picture, bikin conditionalnya
-    // cek apakah picture ini url,
-    // kalau iya maka tampilkan langsung,
-    // kalau bukan maka tampilkan dengan facade storage
-    // get discussions berdasarkan id user dan get dengan paginasi per 5 row
-    // get answers berdasarkan id user dan get dengan paginasi per 5 row
-    // return view
-
-    public function show($username){
+    public function show($username)
+    {
         $user = User::where('username', $username)->first();
         if (!$user) {
             return abort(404);
@@ -42,6 +32,10 @@ class UserController extends Controller
         $totalAnswers = Answer::where('user_id', $user->id)->count();
         $totalLikes = $user->discussions->sum('likeCount') + $user->answers->sum('likeCount');
 
+        // Followers and Following counts
+        $followersCount = $user->followers()->count();
+        $followingCount = $user->following()->count();
+
         return view('pages.users.show', [
             'user' => $user,
             'picture' => $picture,
@@ -52,25 +46,22 @@ class UserController extends Controller
             'totalDiscussions' => $totalDiscussions,
             'totalAnswers' => $totalAnswers,
             'totalLikes' => $totalLikes,
+            'followersCount' => $followersCount,
+            'followingCount' => $followingCount,
         ]);
     }
 
     public function edit($username) {
-        // get user berdasarkan username
         $user = User::where('username', $username)->first();
     
-        // jika user tidak ada atau user id tidak sama dengan id milik user yang sedang login
-        // maka return page not found
         if (!$user || $user->id !== auth()->id()) {
             return abort(404);
         }
     
-        // Validate if the picture is a valid URL, if not get the storage URL
         $picture = filter_var($user->picture, FILTER_VALIDATE_URL)
             ? $user->picture 
             : Storage::url($user->picture);
     
-        // return view
         return view('pages.users.form', [
             'user' => $user,
             'picture' => $picture,

@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\SignUpController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\AnswerController;
+use App\Http\Controllers\FollowController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,8 @@ Route::namespace('App\Http\Controllers\Auth')->group(function() {
 Route::middleware('auth')->group(function() {
     Route::namespace('App\Http\Controllers\My')->group(function() {
         Route::resource('users', UserController::class)->only(['edit', 'update', 'show']);
+    Route::post('/users/{username}/follow', [FollowController::class, 'follow'])->name('users.follow');
+    Route::post('/users/{username}/unfollow', [FollowController::class, 'unfollow'])->name('users.unfollow');
     });
 
     Route::resource('discussions', DiscussionController::class)

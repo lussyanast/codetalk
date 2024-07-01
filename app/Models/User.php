@@ -27,15 +27,33 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // Relasi ke model Discussion
     public function discussions()
     {
         return $this->hasMany(Discussion::class);
     }
 
-    // Relasi ke model Answer
     public function answers()
     {
         return $this->hasMany(Answer::class);
+    }
+
+    // Relasi ke followers
+    public function followers()
+    {
+        return $this->hasMany(Follow::class, 'following_id');
+    }
+
+    // Relasi ke following
+    public function following()
+    {
+        return $this->hasMany(Follow::class, 'follower_id');
+    }
+
+    // Cek apakah pengguna mengikuti pengguna lain
+    public function isFollowing($userId)
+    {
+        return Follow::where('follower_id', $this->id)
+                    ->where('following_id', $userId)
+                    ->exists();
     }
 }
