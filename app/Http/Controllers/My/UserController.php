@@ -36,6 +36,24 @@ class UserController extends Controller
         $followersCount = $user->followers()->count();
         $followingCount = $user->following()->count();
 
+        // Mendapatkan pengguna dengan jumlah diskusi terbanyak
+        $relatedUsers = User::withCount('discussions')
+            ->orderBy('discussions_count', 'desc')
+            ->limit(5) // Ambil 5 pengguna teratas
+            ->get()
+            ->except($user->id); // Mengecualikan pengguna saat ini
+
+        // Mendapatkan topik terbanyak yang dibuat oleh setiap pengguna terkait
+        $relatedUsersWithTopics = $relatedUsers->map(function ($relatedUser) {
+            $topDiscussions = Discussion::where('user_id', $relatedUser->id)
+                ->orderBy('created_at', 'desc')
+                ->limit(3) // Ambil 3 topik terbaru
+                ->get();
+
+            $relatedUser->topDiscussions = $topDiscussions;
+            return $relatedUser;
+        });
+
         return view('pages.users.show', [
             'user' => $user,
             'picture' => $picture,
@@ -48,6 +66,7 @@ class UserController extends Controller
             'totalLikes' => $totalLikes,
             'followersCount' => $followersCount,
             'followingCount' => $followingCount,
+            'relatedUsers' => $relatedUsersWithTopics, // Kirimkan data pengguna terkait dengan topik
         ]);
     }
 

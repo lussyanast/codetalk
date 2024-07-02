@@ -66,11 +66,21 @@
 @section('after-script')
     <script>
         $('#picture').on('change', function(event) {
+            var file = event.target.files[0];
             var output = $('#avatar');
-            output.attr('src', URL.createObjectURL(event.target.files[0]));
-            output.on('load', function() {
-                URL.revokeObjectURL(output.attr('src'));
-            });
+            var maxSize = 1024 * 1024; // Max file size in bytes (1 MB here, adjust as needed)
+            var reader = new FileReader();
+
+            if (file.type.match('image.*') && file.size <= maxSize) {
+                reader.onload = function(e) {
+                    output.attr('src', e.target.result);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('Please select a valid image file (max 1MB)!');
+                $('#picture').val(''); // Clear the file input
+                output.attr('src', '{{ asset('storage/' . $user->picture) }}'); // Revert to current avatar
+            }
         });
     </script>
 @endsection
