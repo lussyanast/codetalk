@@ -138,12 +138,19 @@ class DiscussionController extends Controller
         $notLikedImage = url('assets/images/like.png');
         $likedImage = url('assets/images/liked.png');
 
-         // Ambil 10 kategori teratas berdasarkan jumlah diskusi
+        // Ambil 10 kategori teratas berdasarkan jumlah diskusi
         $topCategories = Category::select('categories.id', 'categories.name', 'categories.slug')
             ->join('discussions', 'categories.id', '=', 'discussions.category_id')
             ->groupBy('categories.id', 'categories.name', 'categories.slug')
             ->orderByRaw('COUNT(discussions.id) DESC')
             ->limit(10)
+            ->get();
+
+        // Ambil diskusi terkait berdasarkan kategori yang sama
+        $relatedDiscussions = Discussion::where('category_id', $discussion->category_id)
+            ->where('id', '!=', $discussion->id)
+            ->latest()
+            ->take(2)
             ->get();
 
         return response()->view('pages.discussions.show', [
@@ -153,8 +160,10 @@ class DiscussionController extends Controller
             'notLikedImage' => $notLikedImage,
             'discussionAnswers' => $discussionAnswers,
             'topCategories' => $topCategories,
+            'relatedDiscussions' => $relatedDiscussions,
         ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.

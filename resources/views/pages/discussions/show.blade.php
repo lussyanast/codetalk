@@ -136,7 +136,7 @@
                                                 <span class="{{ $answer->user->username === $discussion->user->username ? 'text-primary' : '' }}">
                                                     <a href="{{ route('users.show', $answer->user->username) }}" class="fw-bold d-flex align-items-start text-break mb-1">{{ $answer->user->username }}</a>
                                                 </span>
-                                                <span class="color-gray">5 hours ago</span>
+                                                <span class="color-gray">{{ $answer->created_at->diffForHumans() }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -206,6 +206,63 @@
                                 @endphp
                             @endforeach
                         @endisset
+                    </div>
+                </div>
+            </div>
+            <!-- Bagian untuk diskusi terkait -->
+            <div class="row">
+                <div class="col-12 mb-5 mb-lg-0">
+                    <h3 class="mt-5 mb-4">Related Discussions</h3>
+                    <div class="row row-cols-1 row-cols-md-2 g-4">
+                        @forelse ($relatedDiscussions as $relatedDiscussion)
+                            <div class="col">
+                                <div class="card card-discussions mb-4 card-shadow">
+                                    <div class="row p-3">
+                                        <div class="col-12 col-lg-2 mb-1 mb-lg-0 d-flex flex-row flex-lg-column align-items-end">
+                                            <div class="text-nowrap me-2 me-lg-0">
+                                                {{ $relatedDiscussion->likeCount . ' ' . Str::plural('like', $relatedDiscussion->likeCount) }}
+                                            </div>
+                                            <div class="text-nowrap color-gray">
+                                                {{ $relatedDiscussion->answers->count() . ' ' . Str::plural('answer', $relatedDiscussion->answers->count()) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-10">
+                                            <a href="{{ route('discussions.show', $relatedDiscussion->slug) }}">
+                                                <h3>{{ $relatedDiscussion->title }}</h3>
+                                            </a>
+                                            <p>{!! $relatedDiscussion->content_preview !!}</p>
+                                            <div class="row">
+                                                <div class="col me-1 me-lg-2">
+                                                    <a href="{{ route('discussions.categories.show', $relatedDiscussion->category->slug) }}">
+                                                        <span class="badge rounded-pill text-bg-light">{{ $relatedDiscussion->category->name }}</span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-5 col-lg-4">
+                                                    <div class="avatar-sm-wrapper d-inline-block">
+                                                        <a href="{{ route('users.show', $relatedDiscussion->user->username) }}" class="me-1">
+                                                            <img src="{{ filter_var($relatedDiscussion->user->picture, FILTER_VALIDATE_URL)
+                                                                ? $relatedDiscussion->user->picture : Storage::url($relatedDiscussion->user->picture) }}"
+                                                                alt="{{ $relatedDiscussion->user->username }}"
+                                                                class="avatar rounded-circle">
+                                                        </a>
+                                                    </div>
+                                                    <span class="fs-12px">
+                                                        <a href="{{ route('users.show', $relatedDiscussion->user->username) }}" class="me-1 fw-bold">
+                                                            {{ $relatedDiscussion->user->username }}
+                                                        </a>
+                                                        <span class="color-gray">{{ $relatedDiscussion->created_at->diffForHumans() }}</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="card card-discussions">
+                                No related discussions found.
+                            </div>
+                        @endforelse
                     </div>
                 </div>
             </div>
