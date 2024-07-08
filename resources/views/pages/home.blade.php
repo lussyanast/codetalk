@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('body')
+
 <section class="container hero bg-gradient-to-r from-green-400 to-blue-500 py-5 shadow" style="margin-top: 4rem;">
   <div class="row align-items-center h-100">
     <div class="col-12 col-lg-6 offset-lg-3 text-center">
@@ -14,23 +15,23 @@
 <section class="container py-5 min-h-372px d-flex justify-content-center align-items-center">
   <div class="row justify-content-center">
     <div class="col-12 col-lg-4 text-center mb-4">
-      <div class="py-4 px-3 m-4 card-shadow">
+      <div class="py-4 px-5 m-2 card-shadow">
         <img class="promote-icon mb-2" src="{{ url('assets/images/discussions.png')}}" alt="Discussions">
-        <h2>{{ Str::plural('Discussion', $discussionCount) }}</h2>
+        <h5>{{ Str::plural('Discussion', $discussionCount) }}</h5>
         <p class="fs-3 text-truncate" style="max-height: 100px; overflow-y: hidden;">{{ $discussionCount }}</p>
       </div>
     </div>
     <div class="col-12 col-lg-4 text-center mb-4">
-      <div class="py-4 px-3 m-4 card-shadow">
+      <div class="py-4 px-5 m-2 card-shadow">
         <img class="promote-icon mb-2" src="{{ url('assets/images/answers.png')}}" alt="Answers">
-        <h2>{{ Str::plural('Answer', $answerCount) }}</h2>
+        <h5>{{ Str::plural('Answer', $answerCount) }}</h5>
         <p class="fs-3 text-truncate" style="max-height: 100px; overflow-y: hidden;">{{ $answerCount }}</p>
       </div>
     </div>
     <div class="col-12 col-lg-4 text-center mb-4">
-      <div class="py-4 px-3 m-4 card-shadow">
+      <div class="py-4 px-5 m-2 card-shadow">
         <img class="promote-icon mb-2" src="{{ url('assets/images/users.png')}}" alt="Users">
-        <h2>{{ Str::plural('User', $userCount) }}</h2>
+        <h5>{{ Str::plural('User', $userCount) }}</h5>
         <p class="fs-3 text-truncate" style="max-height: 100px; overflow-y: hidden;">{{ $userCount }}</p>
       </div>
     </div>

@@ -12,6 +12,7 @@
         @yield('body')
         @yield('before-script')
         @include('partials.script')
+        @include('partials.livechat')
         @yield('after-script')
     </main>
 

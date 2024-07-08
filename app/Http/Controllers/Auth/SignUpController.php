@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\SignUpRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Auth;
+use Illuminate\Support\Facades\Hash;
 
 class SignUpController extends Controller
 {
@@ -23,8 +24,8 @@ class SignUpController extends Controller
         // jika tidak berhasil maka return 500
 
         $validated = $request->validated();
-        $validated['password'] = bcrypt($validated['password']);
-        $validated['picture'] = config('app.avatar_generator_url').$validated['username'];
+        $validated['password'] = Hash::make($validated['password']); // Menggunakan Hash::make untuk hashing password
+        $validated['picture'] = config('app.avatar_generator_url') . $validated['username'];
         
         $create = User::create($validated);
 
