@@ -24,7 +24,7 @@ class SignUpController extends Controller
         // jika tidak berhasil maka return 500
 
         $validated = $request->validated();
-        $validated['password'] = Hash::make($validated['password']); // Menggunakan Hash::make untuk hashing password
+        $validated['password'] = Hash::make($validated['password']);
         $validated['picture'] = config('app.avatar_generator_url') . $validated['username'];
         
         $create = User::create($validated);

@@ -185,7 +185,7 @@
                 </div>
                 <!-- Related Users -->
                 <div class="col-12 mt-5">
-                    <h3 class="mb-4">Related Users</h3>
+                    <h3 class="mb-4">Most Active Users</h3>
                     <div class="related-users-container">
                         @forelse ($relatedUsers as $relatedUser)
                             <div class="card mb-3 related-user-card">
@@ -224,7 +224,7 @@
                         @empty
                             <div class="card">
                                 <div class="card-body">
-                                    No related users found.
+                                    No most active users found.
                                 </div>
                             </div>
                         @endforelse
