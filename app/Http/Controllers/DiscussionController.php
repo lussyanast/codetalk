@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\DB;
 
 class DiscussionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request) {
         $discussions = Discussion::with(['user', 'category']);
     
@@ -60,9 +57,6 @@ class DiscussionController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return response()->view('pages.discussions.form', [
@@ -70,25 +64,8 @@ class DiscussionController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreRequest $request)
     {
-        // dapatkan dulu data dari form request yang sudah tervalidasi
-        // get data category berdasarkan slugnya
-        // dapatkan id dari categorynya
-        // masukkan user id ke array validated
-        // tambahkan slug + timestamp berdasarkan title ke array validated
-        // buat content_preview berdasarkan content
-        // caranya bersihkan content dari tag
-        // cek apakah content ini karakternya lebih 120
-        // jika iya maka masukkan content tersebut ke content preview + '...'
-        // jika tidak makan masukkan content tersebut ke content preview tanpa '...'
-        // baru masukkan data detail question itu ke tabel discussions
-        // jika berhasil maka buat notif berhasil lalu redirect ke list discussion
-        // jika tidak maka kembalikan error 500
-
         $validated = $request->validated();
         $categoryId = Category::where('slug', $validated['category_slug'])->first()->id;
     
@@ -111,20 +88,8 @@ class DiscussionController extends Controller
         return abort(500);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $slug)
     {
-        // dapatkan discussion berdasarkan slug, dan eager load user dan categorynya
-        // cek apakah data discussion dengan slug tsb tidak ada
-        // jika tidak ada maka return page not found
-        // get answer berdasarkan discussion id
-        // sort berdasarkan created at menurun
-        // paginate 5
-        // get semua category
-        // return response
-
         $discussion = Discussion::with(['user', 'category'])->where('slug', $slug)->first();
 
         if (!$discussion) {
@@ -164,20 +129,8 @@ class DiscussionController extends Controller
         ]);
     }
 
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $slug)
     {
-        // get data discussion berdasarkan slug
-        // cek apakah data discussion dengan slug tsb tidak ada
-        // jika tidak ada maka return page not found
-        // jika ada maka lanjut ke kodingan bawah
-        // cek apakah discussion tsb milik user yang sedang login
-        // jika bukan maka return page not found
-        // return view dengan discussion dan category
-
         $discussion = Discussion::with('category')->where('slug', $slug)->first();
 
         if (!$discussion) {
@@ -196,30 +149,8 @@ class DiscussionController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateRequest $request, string $slug)
     {
-        // get data discussion berdasarkan slug
-        // cek apakah data discussion dengan slug tsb tidak ada
-        // jika tidak ada maka return page not found
-        // jika ada maka lanjut ke kodingan bawah
-        // cek apakah discussion tsb milik user yang sedang login
-        // jika bukan maka return page not found
-        // dapatkan dulu data dari form request yang sudah tervalidasi
-        // get data category berdasarkan slugnya
-        // dapatkan id dari categorynya
-        // masukkan user id ke array validated
-        // buat content_preview berdasarkan content
-        // caranya bersihkan content dari tag
-        // cek apakah content ini karakternya lebih 120
-        // jika iya maka masukkan content tersebut ke content preview + '...'
-        // jika tidak makan masukkan content tersebut ke content preview tanpa '...'
-        // baru update data detail question itu ke tabel discussions
-        // jika berhasil maka buat notif berhasil lalu redirect ke list discussion
-        // jika tidak maka kembalikan error 500
-
         $discussion = Discussion::with('category')->where('slug', $slug)->first();
 
         if (!$discussion) {
@@ -253,21 +184,8 @@ class DiscussionController extends Controller
         return abort(500);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $slug)
     {
-        // get data discussion berdasarkan slug
-        // cek apakah data discussion dengan slug tsb tidak ada
-        // jika tidak ada maka return page not found
-        // jika ada maka lanjut ke kodingan bawah
-        // cek apakah discussion tsb milik user yang sedang login
-        // jika bukan maka return page not found
-        // delete record
-        // jika berhasil maka return notif success dan redirect ke list discussion
-        // jika tidak berhasil maka lanjut ke kodingan di bawahnya yakni return error 500
-        
         $discussion = Discussion::with('category')->where('slug', $slug)->first();
 
         if (!$discussion) {

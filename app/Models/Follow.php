@@ -14,7 +14,6 @@ class Follow extends Model
         'following_id',
     ];
 
-    // Definisikan relasi ke model User jika diperlukan
     public function follower()
     {
         return $this->belongsTo(User::class, 'follower_id');

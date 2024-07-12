@@ -16,13 +16,6 @@ class SignUpController extends Controller
     }
 
     public function signUp(SignUpRequest $request) {
-        // dapatkan dulu request dari form request
-        // tambahkan password dengan method bcrypt/hash password
-        // tambahkan picture dummy sesuai dengan usernamenya
-        // create user berdasarkan request yang sudah tervalidasi dan yang sudah kita proses
-        // jika create berhasil maka loginkan user lalu redirect ke list discussion
-        // jika tidak berhasil maka return 500
-
         $validated = $request->validated();
         $validated['password'] = Hash::make($validated['password']);
         $validated['picture'] = config('app.avatar_generator_url') . $validated['username'];

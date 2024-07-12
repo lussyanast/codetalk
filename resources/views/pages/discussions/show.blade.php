@@ -3,16 +3,16 @@
 <style>
     .pagination > li > a,
     .pagination > li > span {
-        color: #00BD13; /* Warna teks link pagination */
+        color: #00BD13; 
     }
 
     .pagination > li > a:hover,
     .pagination > li > span:hover,
     .pagination > li > a:focus,
     .pagination > li > span:focus {
-        background-color: #00BD13; /* Warna latar belakang saat di-hover */
-        border-color: #00BD13; /* Warna border saat di-hover */
-        color: white; /* Warna teks saat di-hover */
+        background-color: #00BD13; 
+        border-color: #00BD13; 
+        color: white; 
     }
 
     .pagination > .active > a,
@@ -21,9 +21,9 @@
     .pagination > .active > span:hover,
     .pagination > .active > a:focus,
     .pagination > .active > span:focus {
-        background-color: #00BD13; /* Warna latar belakang untuk halaman aktif */
-        border-color: #00BD13; /* Warna border untuk halaman aktif */
-        color: white; /* Warna teks untuk halaman aktif */
+        background-color: #00BD13; 
+        border-color: #00BD13; 
+        color: white; 
     }
 </style>
 

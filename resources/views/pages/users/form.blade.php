@@ -68,7 +68,7 @@
         $('#picture').on('change', function(event) {
             var file = event.target.files[0];
             var output = $('#avatar');
-            var maxSize = 1024 * 1024; // Max file size in bytes (1 MB here, adjust as needed)
+            var maxSize = 1024 * 1024; 
             var reader = new FileReader();
 
             if (file.type.match('image.*') && file.size <= maxSize) {
@@ -78,8 +78,8 @@
                 reader.readAsDataURL(file);
             } else {
                 alert('Please select a valid image file (max 1MB)!');
-                $('#picture').val(''); // Clear the file input
-                output.attr('src', '{{ asset('storage/' . $user->picture) }}'); // Revert to current avatar
+                $('#picture').val(''); 
+                output.attr('src', '{{ asset('storage/' . $user->picture) }}'); 
             }
         });
     </script>

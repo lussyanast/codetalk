@@ -8,12 +8,7 @@ use App\Models\Answer;
 
 class LikeController extends Controller
 {
-    public function discussionLike(string $discussionSlug) {
-        // get discussion berdasarkan slug dari parameter
-        // like discussion dengan model tadi
-        // return json
-        // isi jsonnya adalah likeCount/total semua like dari discussion tersebut
-        
+    public function discussionLike(string $discussionSlug) {      
         $discussion = Discussion::where('slug', $discussionSlug)->first();
         $discussion->like();
 
@@ -25,11 +20,6 @@ class LikeController extends Controller
         ]);
     }
     public function discussionUnlike(string $discussionSlug) {
-        // get discussion berdasarkan slug dari parameter
-        // unlike discussion dengan model tadi
-        // return json
-        // isi jsonnya adalah likeCount/total semua like dari discussion tersebut
-
         $discussion = Discussion::where('slug', $discussionSlug)->first();
         $discussion->unlike();
 
